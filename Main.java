@@ -44,7 +44,7 @@ public class Main {
         if (isRoman == true) {
             String result;
             if (calculation(number1, number2, op) < 1) throw new Exception("Не верный формат");
-            result = convertNumToRoman(calculation(number1, number2, m[1]));
+            result = convertNumToRoman(calculation(number1, number2, op));
             return result;
         } else {
             String result = Integer.toString(calculation(number1, number2, op));
