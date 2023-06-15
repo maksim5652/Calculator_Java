@@ -11,6 +11,7 @@ public class Main {
             "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV", "LXXXVI", "LXXXVII", "LXXXVIII", "LXXXIX", "XC",
             "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI", "XCVII", "XCVIII", "XCIX", "C"
     };
+    static String[] oper = {"+", "-", "*", "/"};
 
     public static void main(String[] args) throws Exception {
         Scanner example = new Scanner(System.in);
@@ -22,6 +23,9 @@ public class Main {
     public static String calc(String ex) throws Exception {
         String[] m = null;
         m = ex.split(" ");
+        if (m.length>3) throw new Exception("Не более 2х операндов!");
+        String op = correctSign(m[1]);
+        if (op == null) throw new Exception("Не верный знак");
         int number1 = 0;
         int number2 = 0;
         boolean isRoman = false;
@@ -39,14 +43,23 @@ public class Main {
         if ((0 > number1 || number1 > 10) || (0 > number2 || number2 > 10)) throw new Exception("Принимает от 1 до 10");
         if (isRoman == true) {
             String result;
-            if (calculation(number1, number2, m[1]) < 1) throw new Exception("Не верный формат");
+            if (calculation(number1, number2, op) < 1) throw new Exception("Не верный формат");
             result = convertNumToRoman(calculation(number1, number2, m[1]));
             return result;
         } else {
-            String result = Integer.toString(calculation(number1, number2, m[1]));
+            String result = Integer.toString(calculation(number1, number2, op));
             return result;
         }
 
+    }
+
+    public static String correctSign(String op) {
+        for (int i = 0; i < oper.length; i++) {
+            if (op.equals(oper[i])) {
+                return op;
+            }
+        }
+        return null;
     }
 
     public static int calculation(int num1, int num2, String sign) {
